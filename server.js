@@ -1,3 +1,4 @@
+// Importing packages, helpers, and routes
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -8,9 +9,10 @@ const routes = require('./controllers');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const sequelize = require('./config/config');
+const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
+// Setting up session cookie storage
 const sess = {
     secret: process.env.SESSION_SECRET,
     cookie: {
@@ -23,6 +25,7 @@ const sess = {
     }),
 };
 
+// Setting up app to use all packages, helpers, and routes
 app.use(session(sess));
 
 const hbs = expressHbrs.create({ helpers });
@@ -36,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
+// Starting server 
 sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
         console.log(`Server listening on port ${PORT}`);
