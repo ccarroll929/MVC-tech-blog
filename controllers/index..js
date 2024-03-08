@@ -1,8 +1,13 @@
-// Import router express
+// Importing router express
 const router = require('express').Router();
-// Import index.js from 'api' folder
+
+// Importing controller routes
 const apiRoutes = require('./api');
-// When a request is made to the /api route, it will be directed to the index.js in the 'api' folder.
+const homeRoutes = require('./homeRoutes');
+const dashboardRoutes = require('./dashboardRoutes');
+
 router.use('/api', apiRoutes);
+router.use('/', homeRoutes);
+router.use('/dashboard', dashboardRoutes);
 
 module.exports = router;
