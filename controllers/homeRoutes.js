@@ -5,7 +5,7 @@ const sequelize = require('../config/connection');
 // Get all Blogposts
 router.get('/', async (req, res) => {
     try {
-          // Retrieve all Blogposts from db
+        // Retrieve all blogposts from db
         const dbBlogpostData = await Blogpost.findAll({ 
             attributes: ['id', 'title', 'content', 'created_at'],           
             include: [
@@ -25,11 +25,11 @@ router.get('/', async (req, res) => {
             order: [['created_at', 'DESC']],
         })
         // Serialize data retrieved
-        const Blogposts = dbBlogpostData.map((Blogpost) => Blogpost.get({ plain: true }));
-        console.log(Blogposts)
+        const blogposts = dbBlogpostData.map((blogpost) => blogpost.get({ plain: true }));
+        console.log(blogposts)
         // Respond with template to render along with date retrieved
         res.render('homepage', 
-            { Blogposts, 
+            { blogposts, 
             loggedIn: req.session.loggedIn, 
             username: req.session.username,
             userId: req.session.userId });
@@ -39,11 +39,11 @@ router.get('/', async (req, res) => {
 });
 
 // Get single Blogpost
-router.get('/Blogpost/:id', async (req, res) => {
+router.get('/blogpost/:id', async (req, res) => {
     try{
         const dbBlogpostData = await Blogpost.findOne({
             where: {id: req.params.id},
-            attributes: ['id', 'content', 'title', 'created_at'],
+            attributes: ['id', 'title', 'content', 'created_at'],
             include: [
                 {
                     model: Comment,
@@ -60,9 +60,9 @@ router.get('/Blogpost/:id', async (req, res) => {
             ],
         });
         if (dbBlogpostData) {
-            const Blogpost = dbBlogpostData.get({ plain: true });
+            const blogpost = dbBlogpostData.get({ plain: true });
             console.log(Blogpost);
-            res.render('single-blogpost', { Blogpost, loggedIn: req.session.loggedIn, username: req.session.username, })  
+            res.render('single-blogpost', { blogpost, loggedIn: req.session.loggedIn, username: req.session.username, })  
         } else {
             res.status(404).json({ message: "This id has no blogpost."});
             return;
@@ -86,4 +86,4 @@ router.get('/signup', async (req, res) => {
     res.render('signup');
 })
 
-module.exports = router; 
+module.exports = router;
