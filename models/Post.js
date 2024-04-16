@@ -1,12 +1,12 @@
-// Create the Comment model for the application, which will be used to interact with the comment table in the database.
+// Create the Post model for the database.
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-// Create the Comment model
-class Comment extends Model {}
+// Create the Post model
+class Post extends Model {}
 
-// Define the Comment model
-Comment.init(
+// Define the Post model
+Post.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -14,8 +14,12 @@ Comment.init(
             primaryKey: true,
             autoIncrement: true
         },
-        comment_text: {
+        title: {
             type: DataTypes.STRING,
+            allowNull: false
+        },
+        content: {
+            type: DataTypes.TEXT,
             allowNull: false,
             validate: {
                 len: [1]
@@ -23,17 +27,8 @@ Comment.init(
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             references: {
                 model: 'user',
-                key: 'id'
-            }
-        },
-        post_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'post',
                 key: 'id'
             }
         }
@@ -42,10 +37,10 @@ Comment.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'comment',
+        modelName: 'post',
         timestamps: true
     }
 );
 
-// Export the Comment model
-module.exports = Comment;
+// Export the Post model
+module.exports = Post;

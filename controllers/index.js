@@ -1,13 +1,11 @@
-// Importing router express
+// Import routes
 const router = require('express').Router();
-
-// Importing controller routes
 const apiRoutes = require('./api');
-const homeRoutes = require('./homeRoutes');
-const dashboardRoutes = require('./dashboardRoutes');
+const homeRoutes = require('./home-routes');
 
-router.use('/', homeRoutes);
+// Set up middleware
 router.use('/api', apiRoutes);
-router.use('/dashboard', dashboardRoutes);
+router.use('/', homeRoutes);
 
+// Export the router
 module.exports = router;

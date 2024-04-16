@@ -1,33 +1,39 @@
-const User = require('./User');
-const Comment = require('./Comment');
-const Blogpost = require('./Blogpost');
-
-User.hasMany(Blogpost, {
-    foreignKey: 'userId',
-    onDelete: 'CASCADE'
-});
-
-User.hasMany(Comment, {
-    foreignKey: 'userId',
-    onDelete: 'CASCADE'
-});
-
-Comment.belongsTo(User, {
-    foreignKey: 'userId',
-});
-
-Comment.belongsTo(Blogpost, {
-    foreignKey: 'blogpostId',
-});
-
-Blogpost.belongsTo(User, {
-    foreignKey: 'userId',
-    onDelete: 'CASCADE'
-});
-
-Blogpost.hasMany(Comment, {
-    foreignKey: 'blogpostId',
-    onDelete: 'CASCADE'
-});
-
-module.exports = { User, Comment, Blogpost };
+ // Import Models
+ const User = require('./User');
+ const Post = require('./Post');
+ const Comment = require('./Comment');
+ 
+ // Create Associations
+ 
+ User.hasMany(Post, {
+   foreignKey: 'user_id',
+     onDelete: 'CASCADE'
+ });
+ 
+ User.hasMany(Comment, {
+     foreignKey: 'user_id',
+     onDelete: 'CASCADE'
+ });
+ 
+ Post.belongsTo(User, {
+     foreignKey: 'user_id',
+     onDelete: 'CASCADE'
+     });
+ 
+ Post.hasMany(Comment, {
+     foreignKey: 'post_id',
+     onDelete: 'CASCADE'
+ });
+ 
+ Comment.belongsTo(User, {
+     foreignKey: 'user_id',
+     onDelete: 'CASCADE'
+ });
+ 
+ Comment.belongsTo(Post, {
+     foreignKey: 'post_id',
+     onDelete: 'CASCADE'
+ });
+ 
+ // Export Models
+ module.exports = { User, Post, Comment };

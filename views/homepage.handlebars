@@ -1,16 +1,19 @@
-<div class="blogposts">
-    {{#each blogposts as |blogpost|}}
- <div class="card">
-    <div class="card-header">
-        <h5 class="card-title float-left">{{title}}</h5>
-        <h8 class="card-subtitle mb-2 float-right">Posted by {{user.username}} on {{formatDate created_at}}</h6>
-    </div>         
-    <div class="card-body">  
-        <p class="card-text">{{content}}</p>
-    </div>   
-    <div class="card-footer">
-        <a href="/blogpost/{{id}}" class="card-link">Click here to see post details</a>
-    </div> 
-</div>  
-    {{/each}}
-</div>
+<main class="container mt-5">
+    <h1 class="mb-4 text-white">Tech Blog Posts</h1>
+        <div class="row">
+            {{#each posts}}
+                <div class="col-md-4">
+                    <div class="card mb-3">
+                        <div class="card-header bg-warning">
+                            <h2 class="card-title">
+                                <a href="/post/{{id}}" class="text-dark">{{title}}</a>
+                            </h2>
+                        </div>
+                        <div class="card-body text-dark">
+                            <p class="card-text">Created by: {{user.username}} at {{format_date createdAt}}</p>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+</main>
