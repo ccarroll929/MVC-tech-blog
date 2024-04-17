@@ -1,23 +1,18 @@
-// Importing Sequelize library
-const Sequelize = require('sequelize');
-// Get dotenv package to access the .env file
-require('dotenv').config();
+const Sequelize = require("sequelize");
 
-let sequelize;
-// Checks to see if the application is deployed.
-if (process.env.JAWSDB_URL) {
-  sequelize = new Sequelize(process.env.JAWSDB_URL);
-} else {
-  sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
-    {
+// To pull the environment variables from the .env file
+require("dotenv").config();
+
+// Create the connection to the database, pass in your MySQL information for username and password
+const sequelize = process.env.JAWSDB_URL 
+  ? new Sequelize(process.env.JAWSDB_URL) // JAWSDB_URL is for HEROKU
+  : new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, { // This is for Local
       host: 'localhost',
       dialect: 'mysql',
-      port: 3306
-    }
-  );
-}
+      dialectOptions: {
+        decimalNumbers: true,
+      },
+    });
 
+// Export the sequelize object
 module.exports = sequelize;
